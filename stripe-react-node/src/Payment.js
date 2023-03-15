@@ -8,16 +8,20 @@ function Payment() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    fetch("/config").then(async (r) => {
+    // fetch("/config").then(async (r) => {
+    fetch("mido/config").then(async (r) => {
       const { publishableKey } = await r.json();
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
 
   useEffect(() => {
-    fetch("/create-payment-intent", {
+    // fetch("/create-payment-intent", {
+    fetch("mido/create-payment-intent", {
       method: "POST",
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        id: 1,
+      }),
     }).then(async (result) => {
       var { clientSecret } = await result.json();
       setClientSecret(clientSecret);
